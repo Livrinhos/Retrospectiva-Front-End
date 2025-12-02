@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #e3e9ff 0%, #f4f4f4 40%, #ffffff 100%);
+    color: #1e1e1e;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+section {
+    max-width: 900px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    text-align: center; /* TUDO CENTRALIZADO */
+}
+
+.header {
+    padding: 30px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.05);
+    backdrop-filter: blur(8px);
+    animation: fade 0.6s ease-out;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;  /* Espaço do título */
+}
+
+.header h3 {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.basic, .intermediary, .advanced, .final {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 35px;
+    border-radius: 20px;
+    border-left: 7px solid #000000;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+    animation: slideUp 0.7s ease-out;
+}
+
+.basic h3, .intermediary h3, .advanced h3, .final h3 {
+    margin-bottom: 25px; /* Título → Texto */
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: #000000;
+}
+
+p {
+    margin-bottom: 30px; /* Texto → Botão */
+    line-height: 1.7rem;
+    font-size: 1.05rem;
+    color: #333;
+}
+
+button {
+    background: linear-gradient(135deg, #000000, #292929);
+    color: white;
+    border: none;
+    padding: 14px 26px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    transition: 0.25s ease;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+
+    display: block;
+    margin: 0 auto 35px auto; /* Centralizado + margem inferior */
+}
+
+button:hover {
+    transform: scale(1.07) translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+a {
+    text-decoration: none;
+}
+
+@keyframes fade {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .basic, .intermediary, .advanced, .final {
+        padding: 25px;
+    }
+
+    button {
+        width: 100%;
+        text-align: center;
+    }
+}
