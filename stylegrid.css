@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Chiron+Sung+HK:ital,wght@0,200..900;1,200..900&family=Creepster&display=swap');
+
+*{
+   /*font-family: "Barlow", sans-serif;*/
+   font-family: "Creepster", system-ui;
+   font-weight: 400;
+   font-style: normal;
+   background-color: #949386;
+   color: black;
+   text-align: center;
+}
+body{
+    margin-top: 10px;
+}
+h1{
+    margin-top: 10px;
+    font-size: 50px;
+}
+img{
+    width: 100%; height: 100%;
+    object-fit: cover; /*Ocupar toda a DIV*/
+}
+main{
+    display: grid;
+    gap: 10px;
+    padding: 0px 400px;
+    text-align: center;
+    /*Configurando 5 Colunas com tamnhos iguais. !fr = 1 fração*/
+    grid-template-columns: repeat(3, 1fr);
+    /*Configurar 2 Linhas com 300px de altura */
+    grid-template-rows: repeat(4, 300px);
+    grid-template-areas: 
+   " A A B "
+    "C D B"
+    "E F F"
+    "E H G";}
+
+main > div:nth-child(2) {grid-area: A}
+main > div:nth-child(7) {grid-area: B}
+main > div:nth-child(1) {grid-area: C}
+main > div:nth-child(6) {grid-area: F}
+main > div:nth-child(5) {grid-area: E}
+main > div:nth-child(4) {grid-area: G}
+main > div:nth-child(3) {grid-area: D}
+main > div:nth-child(8) {grid-area: H}
+
+@media screen and (max-widht: 800px) {
+main > div:nth-child(2) {grid-area: 2/ span 5;}
+main > div:nth-child(7) {grid-area: 2/ span 5;}
+main > div:nth-child(1) {grid-area: 2/ span 5;}
+main > div:nth-child(6) {grid-area: 2/ span 5;}
+main > div:nth-child(5) {grid-area: 2/ span 5;}
+main > div:nth-child(4) {grid-area: 2/ span 5;}
+main > div:nth-child(3) {grid-area: 2/ span 5;}
+main > div:nth-child(8) {grid-area: 2/ span 5;}
+}
+footer{
+    margin-top: 5px;
+    background-color: black;
+    color: white;
+    font-size: 25px;
+}
+
+button {
+display: block;
+margin: 20px auto; /* centraliza */
+padding: 15px 40px; /* aumenta */
+font-size: 18px;
+border: none;
+border-radius: 12px;
+background-color: #464c4e; 
+color: white;
+cursor: pointer;
+box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+button:hover {
+opacity: 0.8; /* leve efeito sem mudar o site */
+}

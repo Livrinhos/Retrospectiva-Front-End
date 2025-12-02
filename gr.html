@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Space Cream</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Noto Serif", serif;
+    }
+
+    body {
+      background-color:#c7d1d6
+      ;
+      color:black;
+      min-height: 100vh;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    
+    .container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 5px;
+      width: 95%;
+      min-height: 100vh;
+      padding: 60px;
+      position: relative;
+    }
+    
+    .intro-card {
+      background-color: #464c4e;
+      padding: 40px 30px;
+      width: 30%;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(0,0,0,0.3);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: sticky;
+      top: 60px;
+      height: calc(100vh - 120px);
+    }
+
+    .intro-card .top-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 30px;
+    }
+    
+    .intro-card .logo {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      background: none;
+      margin-bottom: 15px;
+      display: block;
+    }
+    
+    .intro-card h1 {
+      font-size: 24px;
+      letter-spacing: 2px;
+      text-align: center;
+      width: 100%;
+      margin-bottom: 0;
+      color: white;
+    }
+    
+    .intro-card .paragraph-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      flex: 1;
+      overflow: hidden;
+    }
+    
+    .intro-card .paragraph-wrapper {
+      max-width: 280px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    
+    .intro-card p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: white;
+      text-align: center;
+      width: 100%;
+      margin: 0;
+      padding: 20px;
+      overflow: hidden;
+    }
+    
+    main {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, minmax(100px, 1fr));
+      grid-template-areas:
+        "A B C"
+        "D B F"
+        "D E F";
+      border-radius: 25px;
+      overflow: hidden;
+      width: 60%;
+      min-height: 600px;
+      align-items: center;
+      justify-items: center;
+    }
+    
+    main > div {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      min-height: 120px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    main > div:nth-child(1) { grid-area: E; }
+    main > div:nth-child(2) { grid-area: B; }
+    main > div:nth-child(3) { grid-area: C; }
+    main > div:nth-child(4) { grid-area: D; }
+    main > div:nth-child(5) { grid-area: A; }
+    main > div:nth-child(6) { grid-area: F; }
+    
+    main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 25px;
+      transition: transform 0.3s ease;
+      display: block;
+      
+    }
+    
+    @media (max-width: 1200px) {
+      .container {
+        padding: 50px;
+        gap: 40px;
+      }
+      main {
+        gap: 18px;
+        min-height: 550px;
+      }
+      .intro-card .paragraph-wrapper {
+        max-width: 250px;
+      }
+      .intro-card p {
+        font-size: 13px;
+        line-height: 1.4;
+        padding: 15px;
+      }
+    }
+    
+    @media (max-width: 1024px) {
+      .container {
+        gap: 30px;
+        padding: 40px;
+      }
+      .intro-card {
+        height: calc(100vh - 80px);
+        top: 40px;
+      }
+      main {
+        gap: 15px;
+        min-height: 500px;
+      }
+      main > div {
+        min-height: 100px;
+      }
+      .intro-card .paragraph-wrapper {
+        max-width: 240px;
+      }
+      
+      .intro-card p {
+        font-size: 12.5px;
+        line-height: 1.4;
+        padding: 12px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+        padding: 30px 20px;
+        gap: 30px;
+      }
+
+      .intro-card, main {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .intro-card {
+        position: static;
+        height: auto;
+        margin-bottom: 0;
+        max-width: 600px;
+        padding: 40px 30px;
+      }
+
+      .intro-card .top-content {
+        margin-bottom: 25px;
+      }
+
+      .intro-card .paragraph-wrapper {
+        max-width: 350px;
+      }
+      
+      .intro-card p {
+        font-size: 13px;
+        line-height: 1.5;
+        padding: 15px;
+      }
+
+     
+      main {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, minmax(80px, 1fr));
+        grid-template-areas:
+          "A B C"
+          "D B F"
+          "D E F";
+        min-height: 400px;
+        gap: 12px;
+        align-items: center;
+        justify-items: center;
+      }
+      
+      main > div {
+        min-height: 80px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 25px 15px;
+      }
+      
+      main {
+        min-height: 350px;
+        gap: 10px;
+      }
+      
+      .intro-card {
+        padding: 35px 25px;
+      }
+      
+      main > div {
+        min-height: 70px;
+      }
+      
+      .intro-card .paragraph-wrapper {
+        max-width: 300px;
+      }
+      
+      .intro-card p {
+        font-size: 12px;
+        line-height: 1.4;
+        padding: 12px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px 15px;
+        gap: 25px;
+      }
+
+      .intro-card {
+        padding: 30px 20px;
+      }
+
+      .intro-card .paragraph-wrapper {
+        max-width: 280px;
+      }
+      
+      .intro-card p {
+        font-size: 11px;
+        line-height: 1.3;
+        padding: 10px;
+      }
+
+      
+      main {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, minmax(60px, 1fr));
+        grid-template-areas:
+          "A B C"
+          "D B F"
+          "D E F";
+        min-height: 300px;
+        gap: 8px;
+        align-items: center;
+        justify-items: center;
+      }
+      
+      main > div {
+        min-height: 60px;
+        border-radius: 15px;
+      }
+      
+      main img {
+        border-radius: 15px;
+      }
+
+      .intro-card h1 {
+        font-size: 20px;
+      }
+      
+      .intro-card .logo {
+        width: 65px;
+        height: 65px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      main {
+        min-height: 250px;
+        gap: 6px;
+      }
+      
+      main > div {
+        min-height: 50px;
+        border-radius: 12px;
+      }
+      
+      main img {
+        border-radius: 12px;
+      }
+      
+      .intro-card {
+        padding: 25px 20px;
+      }
+      
+      .container {
+        padding: 15px 10px;
+        gap: 20px;
+      }
+      
+      .intro-card .logo {
+        width: 55px;
+        height: 55px;
+      }
+      
+      .intro-card h1 {
+        font-size: 18px;
+      }
+      
+      .intro-card .paragraph-wrapper {
+        max-width: 250px;
+      }
+      
+      .intro-card p {
+        font-size: 10px;
+        line-height: 1.3;
+        padding: 8px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      main {
+        min-height: 200px;
+        gap: 5px;
+      }
+      
+      main > div {
+        min-height: 40px;
+        border-radius: 10px;
+      }
+      
+      main img {
+        border-radius: 10px;
+      }
+      
+      .intro-card {
+        padding: 20px 15px;
+      }
+      
+      .intro-card .logo {
+        width: 45px;
+        height: 45px;
+      }
+      
+      .intro-card h1 {
+        font-size: 16px;
+      }
+      
+      .intro-card .paragraph-wrapper {
+        max-width: 220px;
+      }
+      
+      .intro-card p {
+        font-size: 9px;
+        line-height: 1.2;
+        padding: 6px;
+      }
+    }
+
+    
+    @media (max-width: 320px) {
+      .intro-card p {
+        font-size: 8.5px;
+        line-height: 1.2;
+        padding: 5px;
+      }
+      
+      .intro-card .paragraph-wrapper {
+        max-width: 200px;
+      }
+    }
+    button {
+  display: block;
+  margin: 20px auto; /* centraliza */
+  padding: 15px 40px; /* aumenta */
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  background-color: #464c4e; 
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+button:hover {
+  opacity: 0.8; /* leve efeito sem mudar o site */
+}
+  </style>
+</head>
+<body>
+  <section class="container">
+    
+   
+    <div class="intro-card">
+      <div class="top-content">
+        <img src="imagens/logo 3.svg" alt="Logo Space Cream" class="logo">
+        <h1>SPACE CREAM</h1>
+      </div>
+      <div class="paragraph-container">
+        <div class="paragraph-wrapper">
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            Adipisci quibusdam vitae quisquam modi laborum! Reiciendis 
+            laboriosam assumenda animi, tempora ullam laudantium soluta 
+            exercitationem perferendis modi error cum similique, sequi quis.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est ullam, minus ducimus praesentium repellendus non aut sint voluptate, animi quae ipsum. Molestias eius ex et ut a expedita architecto. Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime veritatis enim consequuntur! Eum iure labore ipsum ullam atque cupiditate placeat quaerat? Id nemo ipsam dolor libero veritatis vitae quam consectetur
+          </p>
+        </div>
+      </div>
+    </div>
+
+    
+    <main>
+      <div><img src="imagens/sorvete1.png" alt="Paleta de sorvete"></div>
+      <div><img src="imagens/sorvete2.png" alt="Shake de frutas"></div>
+      <div><img src="imagens/sorvete3.png" alt="Sorvete de massa"></div>
+      <div><img src="imagens/sorvete4.png" alt="Picolé"></div> 
+      <div><img src="imagens/sorvete3.png" alt="Sorvete de massa 2"></div>
+      <div><img src="imagens/sorvete4.png" alt="Picolé 2"></div> 
+    </main>
+
+  </section>
+  
+    <a href="index.html">
+        <button>Voltar</button>
+      </a>
+</body>
+</html>

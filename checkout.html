@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!-- Define que o documento é HTML5 -->
+<html lang="pt-BR">
+<head>
+  <!-- Define a codificação e torna o site responsivo -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Título que aparece na aba -->
+  <title>Finalizar Compra - DinoShop ASA</title>
+
+  <!-- Importa o Bootstrap e os ícones -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+  <!-- Estilos personalizados (CSS interno) -->
+  <style>
+    /* Define fundo neutro para a página */
+    body {
+      background-color: #f8f9fa;
+    }
+
+    /* Caixa central do checkout */
+    .checkout-container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    /* Título centralizado */
+    .checkout-title {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    /* Seção do resumo do pedido */
+    .order-summary {
+      border-top: 2px solid #28a745;
+      margin-top: 20px;
+      padding-top: 15px;
+    }
+
+    /* Opções de pagamento (Pix, Cartão, Boleto) */
+    .payment-option {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .payment-option label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    /* Caixa de sucesso (mostrada após confirmar compra) */
+    .success-box {
+      text-align: center;
+      padding: 40px;
+    }
+
+    .success-box i {
+      font-size: 70px;
+      color: #28a745;
+    }
+
+    /* Esconde a mensagem de sucesso até o pedido ser confirmado */
+    .hidden { display: none; }
+  </style>
+</head>
+
+<body>
+  <!-- ======== CONTEÚDO PRINCIPAL DO CHECKOUT ======== -->
+  <div class="container checkout-container">
+    <h2 class="checkout-title">🦖 Finalizar Compra</h2>
+
+    <!-- ======== FORMULÁRIO DE DADOS DO CLIENTE ======== -->
+    <form id="checkout-form">
+      <h5>Dados do Cliente</h5>
+
+      <!-- Campos de informações pessoais -->
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Nome Completo</label>
+          <input type="text" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">E-mail</label>
+          <input type="email" class="form-control" required>
+        </div>
+        <div class="col-md-8">
+          <label class="form-label">Endereço</label>
+          <input type="text" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">CEP</label>
+          <input type="text" class="form-control" required>
+        </div>
+      </div>
+
+      <!-- ======== MÉTODOS DE PAGAMENTO ======== -->
+      <h5 class="mt-4">Forma de Pagamento</h5>
+      <div class="payment-option">
+        <!-- O usuário escolhe uma das três opções -->
+        <label><input type="radio" name="payment" value="pix" required> Pix</label>
+        <label><input type="radio" name="payment" value="cartao"> Cartão de Crédito</label>
+        <label><input type="radio" name="payment" value="boleto"> Boleto</label>
+      </div>
+
+      <!-- ======== RESUMO DO PEDIDO ======== -->
+      <div class="order-summary mt-4">
+        <h5>Resumo do Pedido</h5>
+        <!-- Aqui serão listados os itens do carrinho -->
+        <ul id="checkout-items" class="list-group mb-3"></ul>
+        <!-- Mostra o valor total -->
+        <h5 class="text-end">Total: R$ <span id="checkout-total">0,00</span></h5>
+      </div>
+
+      <!-- Botão para confirmar o pedido -->
+      <button type="submit" class="btn btn-success w-100 mt-3">Confirmar Pedido</button>
+    </form>
+
+    <!-- ======== MENSAGEM DE SUCESSO ======== -->
+    <!-- Essa mensagem aparece depois que o pedido é confirmado -->
+    <div id="success-message" class="hidden success-box">
+      <i class="bi bi-check-circle-fill"></i>
+      <h3>Compra Concluída!</h3>
+      <p>Seu pedido <strong>#<span id="order-id"></span></strong> foi processado com sucesso.</p>
+      <p>Você receberá um e-mail com os detalhes do envio.</p>
+      <!-- Botão para voltar à loja -->
+      <a href="melhor.html" class="btn btn-outline-success mt-3">Voltar à Loja</a>
+    </div>
+  </div>
+
+  <!-- ======== SCRIPT JAVASCRIPT DO CHECKOUT ======== -->
+  <script>
+    // Pega os elementos principais da tela
+    const checkoutItems = document.getElementById('checkout-items');
+    const checkoutTotal = document.getElementById('checkout-total');
+    const checkoutForm = document.getElementById('checkout-form');
+    const successBox = document.getElementById('success-message');
+    const orderId = document.getElementById('order-id');
+
+    // 🔹 Recupera o carrinho salvo (dinoCartV2)
+    let cartData = JSON.parse(localStorage.getItem('dinoCartV2')) || {};
+    let total = 0;
+    const names = Object.keys(cartData);
+
+    // Se o carrinho estiver vazio, mostra a mensagem
+    if (names.length === 0) {
+      checkoutItems.innerHTML = `<li class="list-group-item text-center">Carrinho vazio</li>`;
+    } else {
+      // Caso tenha produtos, mostra cada item e soma o total
+      names.forEach(name => {
+        const item = cartData[name];
+        const subtotal = item.qty * item.price;
+
+        const li = document.createElement('li');
+        li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+        li.innerHTML = `${name} x${item.qty} <span>R$ ${subtotal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>`;
+        
+        checkoutItems.appendChild(li);
+        total += subtotal;
+      });
+
+      // Atualiza o valor total formatado
+      checkoutTotal.textContent = total.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+    }
+
+    // ======== EVENTO AO CONFIRMAR O PEDIDO ========
+    checkoutForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Gera um número de pedido aleatório
+      const id = Math.floor(Math.random() * 90000 + 10000);
+      orderId.textContent = id;
+
+      // Limpa o carrinho após finalizar a compra
+      localStorage.removeItem('dinoCartV2');
+
+      // Esconde o formulário e mostra a mensagem de sucesso
+      checkoutForm.classList.add('hidden');
+      successBox.classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
